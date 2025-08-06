@@ -6,10 +6,14 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
+    "prestart": "npm run prestart:indexes",
+    "prestart:indexes": "ts-node scripts/prestart-indexes.ts",
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "lint": "eslint src --ext .ts",
     "type-check": "tsc --noEmit",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist",
+    "indexes:reset": "RESET_INDEXES=true ts-node scripts/prestart-indexes.ts",
+    "indexes:status": "ts-node -e \"import('./scripts/prestart-indexes').then(m => m.preStartIndexManagement())\""
   },
   "dependencies": {
     "@packsafe/shared": "file:../shared",

@@ -12,6 +12,7 @@ import { connectCache, disconnectCache } from './config/cache';
 import { logger } from './utils/logger';
 import { errorHandler } from './middleware/errorHandler';
 import { authMiddleware } from './middleware/auth';
+import { IndexManager } from './utils/indexManager';
 
 // Routes
 import authRoutes from './routes/auth';
@@ -106,6 +107,12 @@ async function startServer(): Promise<void> {
     // Connect to databases
     await connectDatabase();
     await connectCache();
+
+    // Initialize database indexes
+    logger.info('🔧 Initializing database indexes...');
+    const indexManager = IndexManager.getInstance();
+    await indexManager.initializeIndexes();
+    logger.info('✅ Database indexes initialized');
 
     // Start server
     server.listen(PORT, () => {

@@ -49,7 +49,7 @@ const UserSchema: Schema = new Schema(
     },
     apiKey: {
       type: String,
-      unique: true,
+      // Remove unique: true here since we'll handle it in IndexManager
       sparse: true,
     },
     preferences: {
@@ -82,8 +82,7 @@ const UserSchema: Schema = new Schema(
     whatsappNumber: {
       type: String,
       trim: true,
-      sparse: true,
-      unique: true,
+      // Remove unique and sparse here since we'll handle it in IndexManager
     },
   },
   {
@@ -91,8 +90,8 @@ const UserSchema: Schema = new Schema(
   }
 );
 
-// Add index for faster API key lookups
-UserSchema.index({ apiKey: 1 });
+// Remove manual index creation - IndexManager will handle this
+// UserSchema.index({ apiKey: 1 });
 
 // Hash password before saving
 UserSchema.pre('save', async function (next) {
