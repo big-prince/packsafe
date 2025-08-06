@@ -2,16 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import mongoose from 'mongoose';
 import { Project } from '../models/Project';
 import { logger } from '../utils/logger';
-
-// Import the AuthenticatedRequest interface
-interface TokenPayload {
-  id: string;
-  role: string;
-}
-
-interface AuthenticatedRequest extends Request {
-  user?: TokenPayload;
-}
+import { AuthenticatedRequest } from '../middleware/auth';
 
 /**
  * Get all projects for the authenticated user

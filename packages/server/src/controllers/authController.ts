@@ -3,16 +3,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { User } from '../models/User';
 import { logger } from '../utils/logger';
-
-// Import the AuthenticatedRequest interface
-interface TokenPayload {
-  id: string;
-  role: string;
-}
-
-interface AuthenticatedRequest extends Request {
-  user?: TokenPayload;
-}
+import { AuthenticatedRequest } from '../middleware/auth';
 
 /**
  * Register a new user

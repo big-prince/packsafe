@@ -26,7 +26,6 @@
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
     "docker:build": "docker-compose build",
-    "prepare": "husky install",
     "setup:tailwind": "node scripts/setup-tailwind.js"
   },
   "devDependencies": {

@@ -3,14 +3,7 @@ import axios from 'axios';
 import { compareVersions } from 'compare-versions';
 import { ScanResult } from '../models/ScanResult';
 import { logger } from '../utils/logger';
-
-interface AuthenticatedRequest extends Request {
-  user?: {
-    id: string;
-    email: string;
-    role: string;
-  };
-}
+import { AuthenticatedRequest } from '../middleware/auth';
 
 const router = Router();
 

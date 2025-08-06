@@ -29,9 +29,7 @@
     "node-cron": "^3.0.3",
     "socket.io": "^4.7.4",
     "twilio": "^4.20.1",
-    "winston": "^3.11.0"
-  },
-  "devDependencies": {
+    "winston": "^3.11.0",
     "@types/bcryptjs": "^2.4.6",
     "@types/compression": "^1.7.5",
     "@types/cors": "^2.8.17",
@@ -39,8 +37,10 @@
     "@types/jsonwebtoken": "^9.0.5",
     "@types/multer": "^1.4.11",
     "@types/node-cron": "^3.0.11",
-    "rimraf": "^5.0.5",
-    "ts-node-dev": "^2.0.0",
     "typescript": "^5.3.3"
+  },
+  "devDependencies": {
+    "rimraf": "^5.0.5",
+    "ts-node-dev": "^2.0.0"
   }
 }

@@ -2,16 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { User } from '../models/User';
 import { ScanResult } from '../models/ScanResult';
 import { logger } from '../utils/logger';
-
-// Import the AuthenticatedRequest interface
-interface TokenPayload {
-  id: string;
-  role: string;
-}
-
-interface AuthenticatedRequest extends Request {
-  user?: TokenPayload;
-}
+import { AuthenticatedRequest } from '../middleware/auth';
 
 /**
  * Get user statistics
