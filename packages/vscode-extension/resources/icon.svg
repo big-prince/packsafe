@@ -1,0 +1,22 @@
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3B82F6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1E40AF;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- Shield background -->
+  <path d="M64 8L104 28V52C104 80 88 104 64 120C40 104 24 80 24 52V28L64 8Z" fill="url(#blueGradient)" stroke="#1E40AF" stroke-width="2"/>
+  
+  <!-- Inner highlight -->
+  <path d="M64 16L92 32V52C92 74 80 92 64 104C48 92 36 74 36 52V32L64 16Z" fill="#60A5FA" opacity="0.3"/>
+  
+  <!-- Package symbol -->
+  <rect x="48" y="44" width="32" height="20" fill="white" rx="2"/>
+  <rect x="52" y="48" width="24" height="3" fill="#1E40AF"/>
+  <rect x="52" y="53" width="16" height="2" fill="#3B82F6"/>
+  <rect x="52" y="57" width="20" height="2" fill="#3B82F6"/>
+  
+  <!-- Security checkmark -->
+  <path d="M74 72L80 78L90 68" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

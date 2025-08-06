@@ -42,7 +42,8 @@ export class ConfigurationManager {
     return (
       vscode.workspace
         .getConfiguration(this.CONFIG_SECTION)
-        .get<string>(this.SERVER_URL_SETTING) || 'http://localhost:3001'
+        .get<string>(this.SERVER_URL_SETTING) ||
+      'https://packsafe-backend.onrender.com'
     );
   }
 

@@ -4,7 +4,18 @@
   "displayName": "PackSafe",
   "description": "Real-time dependency health monitoring for Node.js projects",
   "version": "1.0.0",
-  "publisher": "packsafe",
+  "publisher": "SundayPrince",
+  "icon": "resources/store.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/big-prince/packsafe.git",
+    "directory": "packages/vscode-extension"
+  },
+  "homepage": "https://github.com/big-prince/packsafe",
+  "bugs": {
+    "url": "https://github.com/big-prince/packsafe/issues"
+  },
+  "license": "MIT",
   "engines": {
     "vscode": "^1.74.0"
   },
@@ -166,7 +177,7 @@
         },
         "packsafe.serverUrl": {
           "type": "string",
-          "default": "http://localhost:3001",
+          "default": "https://packsafe-backend.onrender.com",
           "description": "PackSafe server URL"
         },
         "packsafe.autoScan": {

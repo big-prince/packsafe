@@ -1,0 +1,60 @@
+# VS Code ignore file - exclude unnecessary files from extension package
+
+# Source files (keep compiled output only)
+src/**
+tsconfig.json
+.eslintrc.json
+
+# Development and build files
+.vscode-test/**
+.vscode/
+*.vsix
+vsc-extension-quickstart.md
+create-icon.html
+DEPLOY.md
+
+# Environment and logs
+.env
+.env.*
+*.log
+npm-debug.log*
+
+# Test files
+test/**
+coverage/
+
+# Dependencies (node_modules is excluded by default)
+node_modules/**
+
+# CRITICAL: Exclude parent directories completely
+../
+../../
+../../../
+**/../**
+**/../../**
+**/../*
+**/../../*
+
+# Exclude specific parent files causing issues
+.editorconfig
+../../.editorconfig
+../.editorconfig
+**/editorconfig
+**/.editorconfig
+
+# Exclude sibling packages
+../shared/**
+../client/**
+../server/**
+
+# Git files
+.git/**
+.gitignore
+
+# Only include these essential files:
+# - out/ (compiled TypeScript)  
+# - resources/ (icons, assets)
+# - README.md
+# - LICENSE  
+# - package.json
+# - package.nls.json

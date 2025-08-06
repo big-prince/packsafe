@@ -162,15 +162,15 @@ Export scan results for CI/CD integration:
 
 ### Main Interface
 
-![Main Interface](images/main-interface.png)
+_Interface screenshots will be added after marketplace publication_
 
 ### Dependency Details
 
-![Dependency Details](images/dependency-details.png)
+_Detailed view screenshots will be added after marketplace publication_
 
 ### Security Alerts
 
-![Security Alerts](images/security-alerts.png)
+_Security alert screenshots will be added after marketplace publication_
 
 ## 🤝 Contributing
 
