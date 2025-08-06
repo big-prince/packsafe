@@ -40,6 +40,7 @@ api.interceptors.response.use(
   response => response,
   error => {
     if (error.response?.status === 401) {
+      console.log('Unauthorized access - redirecting to login');
       localStorage.removeItem('authToken');
       window.location.href = '/login';
     }
