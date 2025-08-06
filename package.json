@@ -1,0 +1,53 @@
+{
+  "name": "packsafe-monorepo",
+  "version": "1.0.0",
+  "description": "PackSafe: Decentralized Package Manager - A comprehensive dependency health monitoring tool",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspace=packages/server && npm run build --workspace=packages/client && npm run compile --workspace=packages/vscode-extension",
+    "build:server": "npm run build --workspace=packages/server",
+    "build:client": "npm run build --workspace=packages/client",
+    "build:extension": "npm run compile --workspace=packages/vscode-extension",
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:server": "npm run dev --workspace=packages/server",
+    "dev:client": "npm run dev --workspace=packages/client",
+    "dev:extension": "npm run dev --workspace=packages/vscode-extension",
+    "test": "npm run test --workspaces",
+    "lint": "npm run lint --workspaces",
+    "clean": "rimraf packages/*/dist packages/*/build packages/*/.next packages/*/out",
+    "install:all": "npm install && npm install --workspaces",
+    "type-check": "npm run type-check --workspaces",
+    "setup": "node scripts/setup-env.js",
+    "validate": "node scripts/validate-project.js",
+    "seed": "node scripts/seed-data.js",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:build": "docker-compose build",
+    "prepare": "husky install",
+    "setup:tailwind": "node scripts/setup-tailwind.js"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.17",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "concurrently": "^8.2.2",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0",
+    "prettier": "^3.2.5",
+    "rimraf": "^5.0.5",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0"
+  }
+}

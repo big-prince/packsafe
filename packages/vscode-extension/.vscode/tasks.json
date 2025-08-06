@@ -1,0 +1,33 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "shell",
+      "command": "code",
+      "args": ["--command", "packsafe.scanProject"],
+      "label": "PackSafe: Scan Project Dependencies",
+      "problemMatcher": ["$tsc"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "focus": true
+      }
+    },
+    {
+      "type": "shell",
+      "command": "code",
+      "args": ["--command", "packsafe.refreshStatus"],
+      "label": "PackSafe: Refresh Status",
+      "problemMatcher": ["$tsc"],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "focus": true
+      }
+    }
+  ]
+}

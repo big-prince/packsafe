@@ -1,0 +1,21 @@
+{
+  "name": "@packsafe/shared",
+  "version": "1.0.0",
+  "description": "Shared types and utilities for PackSafe",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rimraf dist",
+    "lint": "eslint src --ext .ts",
+    "type-check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "rimraf": "^5.0.5"
+  },
+  "files": [
+    "dist"
+  ]
+}

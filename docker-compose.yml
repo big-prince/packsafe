@@ -1,0 +1,99 @@
+version: '3.8'
+
+services:
+  # MongoDB service
+  mongodb:
+    image: mongo:latest
+    container_name: packsafe-mongodb
+    restart: always
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=packsafe
+      - MONGO_INITDB_ROOT_PASSWORD=packsafepassword
+    networks:
+      - packsafe-network
+
+  # Redis service
+  redis:
+    image: redis:latest
+    container_name: packsafe-redis
+    restart: always
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis_data:/data
+    command: redis-server --requirepass packsafe-redis-password
+    networks:
+      - packsafe-network
+
+  # Backend API service
+  server:
+    build:
+      context: .
+      dockerfile: packages/server/Dockerfile
+    container_name: packsafe-server
+    restart: always
+    ports:
+      - '3001:3001'
+    depends_on:
+      - mongodb
+      - redis
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      - MONGODB_URI=mongodb://packsafe:packsafepassword@mongodb:27017/packsafe?authSource=admin
+      - REDIS_URL=redis://redis:6379
+      - REDIS_PASSWORD=packsafe-redis-password
+      - JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
+      - CORS_ORIGIN=http://localhost:5173
+    networks:
+      - packsafe-network
+
+  # Frontend client service
+  client:
+    build:
+      context: .
+      dockerfile: packages/client/Dockerfile
+    container_name: packsafe-client
+    restart: always
+    ports:
+      - '5173:80'
+    depends_on:
+      - server
+    networks:
+      - packsafe-network
+
+  # WhatsApp bot service
+  whatsapp-bot:
+    build:
+      context: .
+      dockerfile: packages/whatsapp-bot/Dockerfile
+    container_name: packsafe-whatsapp-bot
+    restart: always
+    ports:
+      - '3002:3002'
+    depends_on:
+      - server
+      - redis
+    environment:
+      - NODE_ENV=production
+      - PORT=3002
+      - REDIS_URL=redis://redis:6379
+      - REDIS_PASSWORD=packsafe-redis-password
+      - API_BASE_URL=http://server:3001
+      - TWILIO_ACCOUNT_SID=your-twilio-account-sid
+      - TWILIO_AUTH_TOKEN=your-twilio-auth-token
+      - TWILIO_WHATSAPP_NUMBER=whatsapp:+14155238886
+    networks:
+      - packsafe-network
+
+networks:
+  packsafe-network:
+    driver: bridge
+
+volumes:
+  mongodb_data:
+  redis_data:

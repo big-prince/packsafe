@@ -1,0 +1,6 @@
+{
+  "displayName": "PackSafe",
+  "description": "Real-time dependency health monitoring for Node.js projects",
+  "taskDefinition.packsafe.command.description": "The PackSafe command to execute",
+  "taskDefinition.packsafe.label.description": "Label for the task"
+}

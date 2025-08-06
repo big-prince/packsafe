@@ -1,0 +1,292 @@
+{
+  "$schema": "https://raw.githubusercontent.com/schemastore/schemastore/master/src/schemas/json/package.json",
+  "name": "packsafe-vscode",
+  "displayName": "PackSafe",
+  "description": "Real-time dependency health monitoring for Node.js projects",
+  "version": "1.0.0",
+  "publisher": "packsafe",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other",
+    "Extension Packs"
+  ],
+  "keywords": [
+    "dependencies",
+    "security",
+    "vulnerabilities",
+    "packages",
+    "npm",
+    "monitoring"
+  ],
+  "activationEvents": [
+    "workspaceContains:package.json"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "problemMatchers": [
+      {
+        "name": "packsafe",
+        "owner": "packsafe",
+        "fileLocation": [
+          "relative",
+          "${workspaceFolder}"
+        ],
+        "pattern": {
+          "regexp": "^(.*)\\((\\d+),(\\d+)\\):\\s+(error|warning|info):\\s+(.*)$",
+          "file": 1,
+          "line": 2,
+          "column": 3,
+          "severity": 4,
+          "message": 5
+        }
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "packsafe-explorer",
+          "title": "PackSafe",
+          "icon": "resources/shield-p.svg"
+        }
+      ]
+    },
+    "views": {
+      "packsafe-explorer": [
+        {
+          "id": "packageSearchView",
+          "name": "Search & Install Packages",
+          "icon": "$(search)",
+          "contextualTitle": "Search Packages"
+        },
+        {
+          "id": "packageJsonExplorer",
+          "name": "Package Files",
+          "icon": "resources/package-json.svg",
+          "contextualTitle": "Package Files"
+        },
+        {
+          "id": "packageDependencyExplorer",
+          "name": "Dependencies",
+          "icon": "resources/dependencies.svg",
+          "contextualTitle": "Dependencies",
+          "when": "packsafe.packageSelected"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "packsafe.scanProject",
+        "title": "Scan Project Dependencies",
+        "category": "PackSafe"
+      },
+      {
+        "command": "packsafe.testProblemMatcher",
+        "title": "Test Problem Matcher",
+        "category": "PackSafe"
+      },
+      {
+        "command": "packsafe.refreshStatus",
+        "title": "Refresh Status",
+        "category": "PackSafe"
+      },
+      {
+        "command": "packsafe.openDashboard",
+        "title": "Open Dashboard",
+        "category": "PackSafe"
+      },
+      {
+        "command": "packsafe.configure",
+        "title": "Configure API Key",
+        "category": "PackSafe"
+      },
+      {
+        "command": "packsafe.scanSelectedPackage",
+        "title": "Scan Selected Package",
+        "category": "PackSafe",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "packsafe.scanAllPackages",
+        "title": "Scan All Package Files",
+        "category": "PackSafe",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "packsafe.searchPackages",
+        "title": "Search & Install Packages",
+        "category": "PackSafe",
+        "icon": "$(search)"
+      },
+      {
+        "command": "packsafe.uninstallPackage",
+        "title": "Uninstall Package",
+        "category": "PackSafe",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "packsafe.updatePackage",
+        "title": "Update Package",
+        "category": "PackSafe",
+        "icon": "$(arrow-up)"
+      },
+      {
+        "command": "packsafe.showPackageDetails",
+        "title": "Show Package Details",
+        "category": "PackSafe",
+        "icon": "$(info)"
+      }
+    ],
+    "taskDefinitions": [
+      {
+        "type": "packsafe",
+        "required": [
+          "command"
+        ],
+        "properties": {
+          "command": {
+            "type": "string",
+            "description": "The PackSafe command to execute"
+          },
+          "label": {
+            "type": "string",
+            "description": "Label for the task"
+          }
+        }
+      }
+    ],
+    "configuration": {
+      "title": "PackSafe",
+      "properties": {
+        "packsafe.apiKey": {
+          "type": "string",
+          "default": "",
+          "description": "API key for PackSafe service"
+        },
+        "packsafe.serverUrl": {
+          "type": "string",
+          "default": "http://localhost:3001",
+          "description": "PackSafe server URL"
+        },
+        "packsafe.autoScan": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically scan dependencies when package.json changes"
+        },
+        "packsafe.showStatusBar": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show PackSafe status in status bar"
+        },
+        "packsafe.notifications": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show vulnerability notifications"
+        }
+      }
+    },
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "packsafe.scanProject"
+        },
+        {
+          "command": "packsafe.refreshStatus"
+        },
+        {
+          "command": "packsafe.openDashboard"
+        },
+        {
+          "command": "packsafe.configure"
+        },
+        {
+          "command": "packsafe.searchPackages"
+        },
+        {
+          "command": "packsafe.scanSelectedPackage",
+          "when": "false"
+        },
+        {
+          "command": "packsafe.scanAllPackages"
+        },
+        {
+          "command": "packsafe.uninstallPackage",
+          "when": "false"
+        },
+        {
+          "command": "packsafe.updatePackage",
+          "when": "false"
+        },
+        {
+          "command": "packsafe.showPackageDetails",
+          "when": "false"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "packsafe.scanAllPackages",
+          "when": "view == packageJsonExplorer",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "packsafe.scanSelectedPackage",
+          "when": "view == packageJsonExplorer && viewItem == packageJson",
+          "group": "inline"
+        },
+        {
+          "command": "packsafe.uninstallPackage",
+          "when": "view == packageDependencyExplorer && viewItem == dependency",
+          "group": "inline@1"
+        },
+        {
+          "command": "packsafe.updatePackage",
+          "when": "view == packageDependencyExplorer && viewItem == dependency",
+          "group": "inline@2"
+        },
+        {
+          "command": "packsafe.showPackageDetails",
+          "when": "view == packageDependencyExplorer && viewItem == dependency",
+          "group": "inline@3"
+        },
+        {
+          "command": "packsafe.uninstallPackage",
+          "when": "view == packageJsonExplorer && viewItem == dependency",
+          "group": "inline@1"
+        },
+        {
+          "command": "packsafe.updatePackage",
+          "when": "view == packageJsonExplorer && viewItem == dependency",
+          "group": "inline@2"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js",
+    "package": "vsce package",
+    "publish": "vsce publish"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.74.0",
+    "@types/node": "18.x",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3",
+    "@vscode/test-electron": "^2.3.8",
+    "@vscode/vsce": "^2.22.0"
+  },
+  "dependencies": {
+    "@packsafe/shared": "file:../shared",
+    "axios": "^1.6.7",
+    "socket.io-client": "^4.7.4"
+  }
+}
