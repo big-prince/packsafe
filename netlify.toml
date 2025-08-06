@@ -1,0 +1,20 @@
+[build]
+  base = "packages/client"
+  publish = "packages/client/dist"
+  command = "npm run build"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+# Redirect all routes to index.html for React Router
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# API proxy (optional - for development)
+[[redirects]]
+  from = "/api/*"
+  to = "https://packsafe-backend.onrender.com/api/:splat"
+  status = 200
+  force = false
