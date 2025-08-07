@@ -18,14 +18,15 @@ async function preStartIndexManagement() {
     logger.info('🔧 Starting pre-start index management...');
 
     // Connect to MongoDB
-    const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/packsafe';
-    
+    const mongoUri =
+      process.env.MONGODB_URI || 'mongodb://localhost:27017/packsafe';
+
     await mongoose.connect(mongoUri);
     logger.info('✅ Connected to MongoDB for index management');
 
     // Initialize IndexManager
     const indexManager = IndexManager.getInstance();
-    
+
     // Reset indexes if requested via environment variable
     if (process.env.RESET_INDEXES === 'true') {
       logger.warn('🗑️  RESET_INDEXES=true - Resetting all indexes');
@@ -48,7 +49,6 @@ async function preStartIndexManagement() {
     }
 
     logger.info('✅ Pre-start index management completed successfully');
-    
   } catch (error) {
     logger.error('❌ Pre-start index management failed:', error);
     process.exit(1);

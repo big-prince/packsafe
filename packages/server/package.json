@@ -7,7 +7,7 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "prestart": "npm run prestart:indexes",
-    "prestart:indexes": "ts-node scripts/prestart-indexes.ts",
+    "prestart:indexes": "node src/utils/fixIndexes.js",
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "lint": "eslint src --ext .ts",
     "type-check": "tsc --noEmit",

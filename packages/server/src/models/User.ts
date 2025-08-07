@@ -49,7 +49,7 @@ const UserSchema: Schema = new Schema(
     },
     apiKey: {
       type: String,
-      // Remove unique: true here since we'll handle it in IndexManager
+      unique: true, // Keep this as the only index definition
       sparse: true,
     },
     preferences: {
@@ -82,7 +82,8 @@ const UserSchema: Schema = new Schema(
     whatsappNumber: {
       type: String,
       trim: true,
-      // Remove unique and sparse here since we'll handle it in IndexManager
+      unique: true, // Keep this as the only index definition
+      sparse: true,
     },
   },
   {
@@ -90,8 +91,8 @@ const UserSchema: Schema = new Schema(
   }
 );
 
-// Remove manual index creation - IndexManager will handle this
-// UserSchema.index({ apiKey: 1 });
+// No manual index creation - schema definitions handle this
+// UserSchema.index({ apiKey: 1 }); // REMOVED - this was causing duplicate index
 
 // Hash password before saving
 UserSchema.pre('save', async function (next) {
