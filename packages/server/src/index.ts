@@ -12,6 +12,7 @@ import { connectCache, disconnectCache } from './config/cache';
 import { logger } from './utils/logger';
 import { errorHandler } from './middleware/errorHandler';
 import { authMiddleware } from './middleware/auth';
+import { smartKeepAlive } from './utils/smartKeepAlive';
 
 // Routes
 import authRoutes from './routes/auth';
@@ -39,6 +40,11 @@ const io = new SocketIOServer(server, {
 });
 
 const PORT = process.env.PORT || 3001;
+
+// Trust proxy for Render deployment (must be before rate limiting)
+if (process.env.NODE_ENV === 'production') {
+  app.set('trust proxy', 1);
+}
 
 // Security middleware
 app.use(helmet());
@@ -74,6 +80,7 @@ app.get('/health', (req, res) => {
     status: 'ok',
     timestamp: new Date().toISOString(),
     uptime: process.uptime(),
+    keepAlive: smartKeepAlive.getStats(),
   });
 });
 
@@ -127,6 +134,9 @@ async function startServer(): Promise<void> {
       logger.info(`🚀 PackSafe server running on port ${PORT}`);
       logger.info(`📊 Dashboard: http://localhost:${PORT}`);
       logger.info(`🔧 Environment: ${process.env.NODE_ENV || 'development'}`);
+
+      // Start smart keep-alive system
+      smartKeepAlive.start();
     });
   } catch (error) {
     logger.error('Failed to start server:', error);
@@ -137,6 +147,7 @@ async function startServer(): Promise<void> {
 // Graceful shutdown
 process.on('SIGTERM', async () => {
   logger.info('SIGTERM received, shutting down gracefully');
+  smartKeepAlive.stop();
   await disconnectCache();
   server.close(() => {
     logger.info('Process terminated');
@@ -146,6 +157,7 @@ process.on('SIGTERM', async () => {
 
 process.on('SIGINT', async () => {
   logger.info('SIGINT received, shutting down gracefully');
+  smartKeepAlive.stop();
   await disconnectCache();
   server.close(() => {
     logger.info('Process terminated');

@@ -113,6 +113,11 @@
         "category": "PackSafe"
       },
       {
+        "command": "packsafe.diagnostic",
+        "title": "Show Diagnostics",
+        "category": "PackSafe"
+      },
+      {
         "command": "packsafe.scanSelectedPackage",
         "title": "Scan Selected Package",
         "category": "PackSafe",
@@ -210,6 +215,9 @@
         },
         {
           "command": "packsafe.configure"
+        },
+        {
+          "command": "packsafe.diagnostic"
         },
         {
           "command": "packsafe.searchPackages"

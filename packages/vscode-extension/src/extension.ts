@@ -529,6 +529,60 @@ export function activate(context: vscode.ExtensionContext) {
     new PackageDependencyProvider()
   );
 
+  // Add diagnostic command for troubleshooting
+  const diagnosticCommand = vscode.commands.registerCommand(
+    'packsafe.diagnostic',
+    async () => {
+      const diagnostics = [];
+
+      // Check workspace
+      const workspaceFolders = vscode.workspace.workspaceFolders;
+      diagnostics.push(
+        `Workspace Folders: ${workspaceFolders ? workspaceFolders.length : 0}`
+      );
+
+      if (workspaceFolders) {
+        workspaceFolders.forEach((folder, index) => {
+          diagnostics.push(`  Folder ${index}: ${folder.uri.fsPath}`);
+        });
+      }
+
+      // Check for package.json files
+      try {
+        const packageJsonFiles = await vscode.workspace.findFiles(
+          '**/package.json',
+          '{**/node_modules/**,**/bower_components/**,**/jspm_packages/**,**/web_modules/**,**/dist/**,**/build/**,**/coverage/**,**/.git/**}'
+        );
+        diagnostics.push(
+          `Package.json files found: ${packageJsonFiles.length}`
+        );
+        packageJsonFiles.forEach((file, index) => {
+          diagnostics.push(`  File ${index}: ${file.fsPath}`);
+        });
+      } catch (error) {
+        diagnostics.push(`Error finding package.json files: ${error}`);
+      }
+
+      // Check server connection
+      const serverUrl = configManager.getServerUrl();
+      diagnostics.push(`Server URL: ${serverUrl}`);
+
+      // Show diagnostics
+      const message = diagnostics.join('\n');
+      Logger.info('PackSafe Diagnostics:\n' + message);
+      vscode.window
+        .showInformationMessage(
+          'PackSafe Diagnostics (see Output panel)',
+          'Show Output'
+        )
+        .then(selection => {
+          if (selection === 'Show Output') {
+            outputChannel.show();
+          }
+        });
+    }
+  );
+
   // Add disposables to context
   context.subscriptions.push(
     scanCommand,
@@ -542,6 +596,7 @@ export function activate(context: vscode.ExtensionContext) {
     uninstallPackageCommand,
     updatePackageCommand,
     showPackageDetailsCommand,
+    diagnosticCommand,
     packageJsonWatcher,
     statusBarManager,
     websocketClient,
