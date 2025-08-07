@@ -3,7 +3,7 @@
   "name": "packsafe-vscode",
   "displayName": "PackSafe",
   "description": "Real-time dependency health monitoring for Node.js projects",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "SundayPrince",
   "icon": "resources/store.png",
   "repository": {
